@@ -1,0 +1,31 @@
+POST http://localhost:3333/create/tarefa
+Content-Type: application/json
+
+{
+        "descricao" : "test01",
+        "categoria" : "estudar",
+        "status" : "pendente",
+        "horaCriacao" : "07:00",
+        "horaFinal" : "09:00"
+}
+
+###
+
+GET  http://localhost:3333/tarefas
+
+
+###
+PUT http://localhost:3333/tarefa/3561cbad-c3ef-4eb7-ad87-94cfb39f923e
+Content-Type: application/json
+
+{
+        "descricao" : "1",
+        "categoria" : "estudar",
+        "status" : "concluido",
+        "horaCriacao" : "07:02",
+        "horaFinal" : "09:02"
+}
+
+###
+
+DELETE http://localhost:3333/tarefa/49e9414b-8781-42cd-9358-bf161da2ba3f
