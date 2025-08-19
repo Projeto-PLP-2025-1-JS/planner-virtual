@@ -1,10 +1,10 @@
 # Planner virtual
 
-## 👥 Integrantes
+## Integrantes
 [Ruan Diego](https://github.com/Ruan-Alves-Paz) | [Guilherme Gama](https://github.com/GuilhermeAGama) | [Renato Beltrão](https://github.com/RenatoBeltrao) 
 
 
-## :page_with_curl: planner-virtual
+## planner-virtual
 Este projeto consiste na implementação de um planner virtual que auxilia o usuário na organização de suas metas e tarefas diárias, semanais, mensais e anuais. O sistema foi desenvolvido como parte da disciplina Paradigmas de Linguagens de Programação da UFAPE (Universidade Federal do Agreste de Pernambuco). O objetivo é oferecer uma ferramenta funcional para planejamento, acompanhamento e análise de produtividade.
 
 
@@ -35,18 +35,12 @@ Este projeto consiste na implementação de um planner virtual que auxilia o usu
 O sistema busca, primariamente, aumentar a visibilidade de eventos universitários para um público mais amplo, simplificar a inscrição e gestão para todos os envolvidos, e incentivar a participação ativa da comunidade acadêmica em atividades que enriquecem o ensino e promovem a cultura.
 
 
-## 🛠️ Tecnologias Usadas
-#### [Angular](https://angular.dev/overview) - Front-end
-*   Versão 20.1.0
-#### [Spring Boot](https://spring.io/projects/spring-boot) - Back-end
-*   Versão 3.4.7
-#### [PostgreSQL](https://www.postgresql.org/) - Banco de Dados
-*   Versão 17.5
+## Linguagem Utilizada
 
-## Endereços
-Abaixo segue os endereços de acesso para as versões de produção do projeto
-#### [Front-end](https://frontend-6lpd.onrender.com)
-#### [Back-end](https://plataforma-de-eventos-1.onrender.com)
+### Javascript
+-   A linguagem JavaScript foi escolhida para o desenvolvimento do projeto.
+-   Essa escolha se mostrou otima, pois JavaScript é muito utilizado no desenvolvimento web, permitindo integrar facilmente o front-end e o back-end.
+-   Além disso, foi uma grande experiencia aprender de forma independente uma linguagem de programação totalmente do 0.
 
-## 🚧 Status do Projeto
-### Em desenvolvimento
+
+
