@@ -8,7 +8,7 @@
 Este projeto consiste na implementação de um planner virtual que auxilia o usuário na organização de suas metas e tarefas diárias, semanais, mensais e anuais. O sistema foi desenvolvido como parte da disciplina Paradigmas de Linguagens de Programação da UFAPE (Universidade Federal do Agreste de Pernambuco). O objetivo é oferecer uma ferramenta funcional para planejamento, acompanhamento e análise de produtividade.
 
 
-## 📌 Funcionalidades principais:
+## Funcionalidades principais:
 
 ### Gestão de Metas
 
