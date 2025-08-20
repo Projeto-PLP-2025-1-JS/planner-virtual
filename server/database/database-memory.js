@@ -2,7 +2,8 @@ import { randomUUID } from "node:crypto"
 
 export class DatabaseMemory {
     #tarefa = new Map()
-
+    #meta = new Map()
+    
     create(tarefa){
         const tarefaId = randomUUID()
         this.#tarefa.set(tarefaId, tarefa)
