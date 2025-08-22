@@ -41,4 +41,31 @@ export class DatabaseMemory {
         this.#tarefa.delete(id)
     }
 
-}
+
+//metodos de meta
+
+    createMeta(meta){
+        const metaId = randomUUID()
+        this.#meta.set(metaId,meta)
+    }
+
+    getMetas(search){
+        return Array.from(this.#meta.entries()).map((metaArray)=> {
+                const id = metaArray[0]
+                const data = metaArray[1]
+                
+                return {
+                    id,
+                    ...data,
+                }
+        })
+        .filter(meta => {
+            if (search){
+              return meta.descricao.includes(search)
+            }
+            return true 
+        })
+    }
+    
+    }
+
