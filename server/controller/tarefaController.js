@@ -1,6 +1,8 @@
 import { tarefaService } from "../service/tarefa-service.js";
 
 export const tarefaController = {
+
+    
       criar: (request, reply) => {
     try {
       tarefaService.criarTarefa(request.body)

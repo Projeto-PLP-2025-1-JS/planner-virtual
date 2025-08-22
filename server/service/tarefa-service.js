@@ -1,7 +1,5 @@
-import { DatabaseMemory } from "../database/database-memory.js";
+import { database } from "../database/database.js";
 import { tarefaModel } from "../model/tarefaModel.js";
-
-const database = new DatabaseMemory()
 
 export const tarefaService = {
     criarTarefa: (tarefaData) => {
