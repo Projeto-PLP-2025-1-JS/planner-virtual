@@ -9,14 +9,10 @@ export const metaModel = z.object({
 
     status: z.string(),
   
-    dataCriacao: z.date(),
+    dataCriacao: z.string(),
   
-    dataFinal: z.date()
-    .optional(), 
+    dataFinal: z.string().nullable().optional(), 
 
-    dataConcluida: z.date()
+    dataConcluida: z.string().nullable().optional(),
 
 })
-
-[{"id":1,"descricao":"CVXCVXCV","categoria":"financeiro",
-    "periodo":"semana","status":"pendente","dataCriacao":"2025-08-20","dataFinal":"2025-08-24","dataConcluida":null}]
