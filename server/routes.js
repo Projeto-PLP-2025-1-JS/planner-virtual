@@ -1,3 +1,4 @@
+import { metaController } from "./controller/metaController.js";
 import { tarefaController } from "./controller/tarefaController.js";
 
 export function appRoutes (server){
@@ -8,5 +9,7 @@ export function appRoutes (server){
     server.put('/tarefa/:id', tarefaController.atualizar)
     server.delete('/tarefa/:id', tarefaController.delete)
 
-    server.get('/meta/get',tarefaController.listar)
+    //server.get('/meta/get',metaController.listar)
+    server.post('/meta/create',metaController.create)
+    server.get('/meta/get',metaController.getMetas)
 }

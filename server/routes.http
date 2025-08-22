@@ -1,8 +1,8 @@
-POST http://localhost:3333/create/tarefa
+POST http://localhost:3333/tarefa/create
 Content-Type: application/json
 
 {
-        "descricao" : "test01",
+        "descricao" : 2,
         "categoria" : "estudar",
         "status" : "pendente",
         "horaCriacao" : "07:00",
@@ -29,3 +29,28 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3333/tarefa/49e9414b-8781-42cd-9358-bf161da2ba3f
+
+###
+
+POST http://localhost:3333/meta/create
+Content-Type: application/json
+
+{"descricao":"CVXCVXCV","categoria":"financeiro",
+    "periodo":"semana","status":"pendente","dataCriacao":"2025-08-20","dataFinal":"2025-08-24"}
+
+# descricao: z.string(),
+    
+#     categoria: z.string(),
+
+#     periodo: z.string(),
+
+#     status: z.string(),
+  
+#     dataCriacao: z.string(),
+  
+#     dataFinal: z.string()
+#     .optional(), 
+
+#     dataConcluida: z.string().nullable().optional()
+
+
