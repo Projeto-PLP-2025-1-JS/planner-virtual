@@ -27,4 +27,25 @@ export const metaController = {
     
 },
 
+    updateMeta: (request,reply) => {
+        try{
+            const idUsuario = request.params.id
+            const metaAtualizada = request.body
+            metaService.updateMeta(idUsuario,metaAtualizada)
+            return reply.status(204).send()
+        }catch(e){
+            return reply.status(400).send('Erro ao atualizar tarefa: '+ e.message)
+        }
+    },
+
+    deleteMeta:(request,reply) => {
+        try{
+            const idDeletar = request.params.id
+            metaService.deleteMeta(idDeletar)
+            return reply.status(204).send()
+        }catch(e){
+            return reply.status(400).send('Erro ao deletar meta:'+ e.message)
+        }
+    }
+
 }

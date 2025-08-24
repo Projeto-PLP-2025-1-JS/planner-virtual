@@ -12,4 +12,6 @@ export function appRoutes (server){
     //server.get('/meta/get',metaController.listar)
     server.post('/meta/create',metaController.create)
     server.get('/meta/get',metaController.getMetas)
+    server.put('/meta/update/:id',metaController.updateMeta)
+    server.delete('/meta/delete/:id',metaController.deleteMeta)
 }

@@ -66,6 +66,19 @@ export class DatabaseMemory {
             return true 
         })
     }
-    
+
+    updateMeta(id,metaData){
+        if(this.#meta.has(id))
+            {
+        this.#meta.set(id,metaData)
+    }
+    else{
+        throw new Error('Meta não encontrada.')}
+    }
+
+    deleteMeta(id){
+        this.#meta.delete(id)
+    }
+
     }
 
