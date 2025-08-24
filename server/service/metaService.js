@@ -21,4 +21,22 @@ export const metaService = {
             throw new Error('Erro ao buscar metas: ' + e.message);
         }
     },
+
+    updateMeta: (id,metaData) => {
+        try{
+            const meta = metaModel.parse(metaData);
+            database.updateMeta(id,meta)
+        }catch (e){
+            throw new Error('Erro ao atualizar meta: ' + e.message);
+        }
+    },
+
+    deleteMeta: (id) => {
+        try{
+            database.deleteMeta(id)
+        }
+        catch (e){
+            throw new Error("Erro ao deletar meta: " + e.message)
+        }
+    }
 }
