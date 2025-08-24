@@ -1,3 +1,4 @@
+// Metas
 // Event listeners de filtros e formulário de Metas
 const formMeta = document.getElementById('form-meta');
 const filtroPeriodo = document.getElementById('filtro-periodo');
@@ -5,9 +6,8 @@ const filtroCategoria = document.getElementById('filtro-categoria');
 const btnLimparMetas = document.getElementById('btn-limpar-metas');
 const listaMetasDiv = document.getElementById('lista-metas'); // <-- faltava isso
 
-// --- Inicialização de Metas ---
-carregarMetas();  // carrega do localStorage
-renderMetas();    // renderiza a lista na tela
+carregarMetas(); 
+renderMetas(); 
 
 function renderMetas() {
   falhaStatusMeta();
@@ -55,17 +55,15 @@ filtroPeriodo.addEventListener('change', renderMetas);
 filtroCategoria.addEventListener('change', renderMetas);
 
 
-
-
+// Tarefas
 // Event listeners de filtros e formulário de Tarefas
 const formTarefa = document.getElementById('form-tarefa');
 const filtroCategoriaTarefa = document.getElementById('filtro-categoria-tarefa');
 const btnLimparTarefas = document.getElementById('btn-limpar-tarefas');
 const listaTarefasDiv = document.getElementById('lista-tarefas'); // <-- faltava isso
 
-// --- Inicialização de Tarefas ---
-carregarTarefas();   // carrega do localStorage
-renderTarefas();     // renderiza a lista na tela
+carregarTarefas();
+renderTarefas(); 
 
 
 function renderTarefas() {

@@ -18,6 +18,22 @@ function listarTarefas(categoria = '') {
 function salvarTarefas() {
   localStorage.setItem('tarefas', JSON.stringify(tarefas));
   localStorage.setItem('proximoIdTarefa', proximoIdTarefa);
+  salvarTarefasServer(tarefas[0]);
+}
+
+async function salvarTarefasServer(tarefas) {
+  try {
+    const response = await fetch('http://localhost:3333/tarefa/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(tarefas)
+    });
+    if (!response.ok) throw new Error('Erro ao salvar tarefas');
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // Carrega tarefas do localStorage
@@ -33,17 +49,15 @@ function carregarTarefas() {
   proximoIdTarefa = parseInt(localStorage.getItem('proximoIdTarefa')) || tarefas.length + 1;
 }
 
-// Deleta tarefa pelo id
 function deletarTarefaId(id) {
   const index = tarefas.findIndex(t => t.id === id);
   if (index !== -1) {
     tarefas.splice(index, 1);
     salvarTarefas();
-    renderTarefas(); // função que renderiza na tela, similar ao renderMetas
+    renderTarefas(); 
   }
 }
 
-// Atualiza status da tarefa
 function atualizarStatusTarefa(id, status) {
   const tarefa = tarefas.find(t => t.id === id);
   if (tarefa) {
@@ -53,7 +67,6 @@ function atualizarStatusTarefa(id, status) {
   }
 }
 
-// Atualiza automaticamente tarefas atrasadas
 function atualizarStatusTarefasAtrasadas() {
   const agora = new Date();
   tarefas.forEach(t => {
