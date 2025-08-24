@@ -2,7 +2,7 @@ POST http://localhost:3333/tarefa/create
 Content-Type: application/json
 
 {
-        "descricao" : 2,
+        "descricao" : "2",
         "categoria" : "estudar",
         "status" : "pendente",
         "horaCriacao" : "07:00",
@@ -15,7 +15,7 @@ GET  http://localhost:3333/tarefas
 
 
 ###
-PUT http://localhost:3333/tarefa/3561cbad-c3ef-4eb7-ad87-94cfb39f923e
+PUT http://localhost:3333/tarefa/b0ded676-d3cc-43af-a696-f5e03bcc5101
 Content-Type: application/json
 
 {
@@ -28,29 +28,28 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3333/tarefa/49e9414b-8781-42cd-9358-bf161da2ba3f
+DELETE http://localhost:3333/tarefa/b0ded676-d3cc-43af-a696-f5e03bcc5101
 
 ###
 
 POST http://localhost:3333/meta/create
 Content-Type: application/json
 
-{"descricao":"CVXCVXCV","categoria":"financeiro",
+{"descricao":"as","categoria":"financeiro",
     "periodo":"semana","status":"pendente","dataCriacao":"2025-08-20","dataFinal":"2025-08-24"}
 
-# descricao: z.string(),
-    
-#     categoria: z.string(),
+###
 
-#     periodo: z.string(),
+GET  http://localhost:3333/meta/get
 
-#     status: z.string(),
-  
-#     dataCriacao: z.string(),
-  
-#     dataFinal: z.string()
-#     .optional(), 
+###
 
-#     dataConcluida: z.string().nullable().optional()
+PUT  http://localhost:3333/meta/update/438a4a3f-64df-4b20-90d6-791b37e46a8f
+Content-Type: application/json
 
+{"descricao":"Atualizado","categoria":"1212",
+    "periodo":"semana","status":"pendente","dataCriacao":"2025-08-20","dataFinal":"2025-08-24"}
 
+###
+
+DELETE http://localhost:3333/meta/delete/e0414508-b005-4a5f-8cc2-67cd069fd945
