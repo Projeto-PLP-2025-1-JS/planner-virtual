@@ -14,7 +14,6 @@ class Tarefa {
     return agora.toTimeString().slice(0, 5); // "HH:MM"
   }
 
-  // Converte "HH:MM" para Date se estiver no futuro, senão retorna null
   stringParaDate(horaStr) {
     const [hora, minuto] = horaStr.split(':').map(Number);
     const agora = new Date();
@@ -22,7 +21,6 @@ class Tarefa {
 
     horaFinal.setHours(hora, minuto, 0, 0);
 
-    // Se a hora final já passou, retorna null
     return horaFinal;
   }
   

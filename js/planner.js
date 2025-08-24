@@ -14,6 +14,22 @@ function listarMetas(periodo) {
 function salvarMetas() {
   localStorage.setItem('metas', JSON.stringify(metas));
   localStorage.setItem('proximoId', proximoId);
+  salvarMetasServer(metas[0]);
+}
+
+async function salvarMetasServer(meta) {
+  try {
+    const response = await fetch('http://localhost:3333/meta/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(meta)
+    });
+    if (!response.ok) throw new Error('Erro ao salvar metas');
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function deletarMetaId(id) {
