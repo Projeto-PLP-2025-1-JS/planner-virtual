@@ -2,16 +2,21 @@ POST http://localhost:3333/tarefa/create
 Content-Type: application/json
 
 {
-        "descricao" : "2",
+        "descricao" : "dsvasdvjahd",
         "categoria" : "estudar",
         "status" : "pendente",
         "horaCriacao" : "07:00",
-        "horaFinal" : "09:00"
+        "horaFinal" : "09:00",
+        "horaConclusao" : "20:00"
 }
 
 ###
 
 GET  http://localhost:3333/tarefas
+
+###
+
+GET  http://localhost:3333/tarefas?search=estudar
 
 
 ###

@@ -1,7 +1,8 @@
 import { z } from "zod" ;
 
 export const tarefaModel = z.object({
-      descricao: z.string(),
+    
+  descricao: z.string(),
     
   categoria: z.string(),
 
@@ -10,5 +11,7 @@ export const tarefaModel = z.object({
   horaCriacao: z.string(),
   
   horaFinal: z.string()
-    .optional(), 
+  .optional(),
+
+  horaConclusao: z.string().optional() 
 })
