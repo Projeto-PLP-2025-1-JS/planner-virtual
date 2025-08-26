@@ -10,8 +10,7 @@ export const tarefaModel = z.object({
   
   horaCriacao: z.string(),
   
-  horaFinal: z.string()
-  .optional(),
+  horaFinal: z.string().optional(),
 
-  horaConclusao: z.string().optional() 
+  horaConclusao: z.string().nullable().optional(),
 })

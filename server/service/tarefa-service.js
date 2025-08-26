@@ -20,13 +20,13 @@ export class tarefaService {
         if(!tarefaValida){
             throw new Error('Tarefa não encontrada.');
         }
-        database.update(tarefaId,tarefaData)
+        await this.database.update(tarefaId,tarefaData)
     }
     async deleteTarefa (tarefaId) {
         const tarefaValida = await this.database.findById(tarefaId)
         if(!tarefaValida){
             throw new Error('Tarefa não encontrada.');
         }
-        database.delete(tarefaId)
+        await this.database.delete(tarefaId)
     }
 }

@@ -7,7 +7,7 @@ Content-Type: application/json
         "status" : "pendente",
         "horaCriacao" : "07:00",
         "horaFinal" : "09:00",
-        "horaConclusao" : "20:00"
+        "horaConclusao" : ""
 }
 
 ###
@@ -20,20 +20,21 @@ GET  http://localhost:3333/tarefas?search=estudar
 
 
 ###
-PUT http://localhost:3333/tarefa/b0ded676-d3cc-43af-a696-f5e03bcc5101
+PUT http://localhost:3333/tarefa/01faeb6a-b51c-401c-b8d9-33bcdbb5a218
 Content-Type: application/json
 
 {
-        "descricao" : "1",
-        "categoria" : "estudar",
-        "status" : "concluido",
-        "horaCriacao" : "07:02",
-        "horaFinal" : "09:02"
+        "descricao" : "dsvasdvjahd",
+        "categoria" : "financeiro",
+        "status" : "pendente",
+        "horaCriacao" : "07:00",
+        "horaFinal" : "09:00",
+        "horaConclusao" : "20:00"
 }
 
 ###
 
-DELETE http://localhost:3333/tarefa/b0ded676-d3cc-43af-a696-f5e03bcc5101
+DELETE http://localhost:3333/tarefa/01faeb6a-b51c-401c-b8d9-33bcdbb5a218
 
 ###
 
