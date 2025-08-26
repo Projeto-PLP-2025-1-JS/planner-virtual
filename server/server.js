@@ -4,7 +4,7 @@ import { appRoutes } from './routes.js'
 
 const server = fastify();
 server.register(cors, {
-  origin: "http://localhost:5500" ,
+  origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"], 
   allowedHeaders: ["Content-Type", "Authorization"]
 });
