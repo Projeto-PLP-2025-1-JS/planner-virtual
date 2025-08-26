@@ -1,25 +1,29 @@
-import { database } from "../database/database.js";
 import { tarefaModel } from "../model/tarefaModel.js";
 
-export const tarefaService = {
-    criarTarefa: (tarefaData) => {
+export class tarefaService {
+    constructor(database) {
+        this.database = database;
+    }
+
+
+    async criarTarefa (tarefaData) {
         const tarefaValida = tarefaModel.parse(tarefaData);
-        database.create(tarefaValida)
-    },
+        await this.database.create(tarefaValida)
+    }
 
-    listar: (search) => {
-        return database.listar(search)
-    },
+    async listar (search) {
+        return await this.database.listar(search)
+    }
 
-    atualizarTarefa: (tarefaId, tarefaData) =>{
-        const tarefaValida = database.findById(tarefaId)
+    async atualizarTarefa (tarefaId, tarefaData) {
+        const tarefaValida = await this.database.findById(tarefaId)
         if(!tarefaValida){
             throw new Error('Tarefa não encontrada.');
         }
         database.update(tarefaId,tarefaData)
-    },
-    deleteTarefa: (tarefaId) => {
-        const tarefaValida = database.findById(tarefaId)
+    }
+    async deleteTarefa (tarefaId) {
+        const tarefaValida = await this.database.findById(tarefaId)
         if(!tarefaValida){
             throw new Error('Tarefa não encontrada.');
         }

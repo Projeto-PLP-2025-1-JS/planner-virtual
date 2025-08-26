@@ -27,7 +27,7 @@ export class DatabaseMemory {
         })
         .filter(tarefa => {
             if (search){
-              return tarefa.title.includes(search)
+              return tarefa.categoria.includes(search)
             }
             return true 
         })
