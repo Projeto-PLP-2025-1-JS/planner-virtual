@@ -2,12 +2,12 @@ POST http://localhost:3333/tarefa/create
 Content-Type: application/json
 
 {
-        "descricao" : "dsvasdvjahd",
-        "categoria" : "estudar",
-        "status" : "pendente",
-        "horaCriacao" : "07:00",
-        "horaFinal" : "09:00",
-        "horaConclusao" : ""
+    "descricao": "teste1234567",
+    "categoria": "estudar",
+    "status": "pendente",
+    "dataCriacao": "2025-09-10T07:00:00Z",
+    "dataFinal": "2025-09-10T09:00:00Z",
+    "dataConcluida": null
 }
 
 ###
