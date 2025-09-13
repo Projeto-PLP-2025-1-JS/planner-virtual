@@ -2,7 +2,7 @@ POST http://localhost:3333/tarefa/create
 Content-Type: application/json
 
 {
-    "descricao": "teste1234567",
+    "descricao": "teste1456784567456784567",
     "categoria": "estudar",
     "status": "pendente",
     "dataCriacao": "2025-09-10T07:00:00Z",
@@ -16,27 +16,32 @@ GET  http://localhost:3333/tarefas
 
 ###
 
-GET  http://localhost:3333/tarefas?search=estudar
-
+GET  http://localhost:3333/tarefa/1
 
 ###
-PUT http://localhost:3333/tarefa/01faeb6a-b51c-401c-b8d9-33bcdbb5a218
+PUT http://localhost:3333/tarefa/2
 Content-Type: application/json
 
 {
-        "descricao" : "dsvasdvjahd",
-        "categoria" : "financeiro",
-        "status" : "pendente",
-        "horaCriacao" : "07:00",
-        "horaFinal" : "09:00",
-        "horaConclusao" : "20:00"
+    "descricao": "teste2atualizando",
+    "categoria": "estudar",
+    "status": "pendente",
+    "dataCriacao": "2025-09-10T07:00:00Z",
+    "dataFinal": "2025-09-10T09:00:00Z",
+    "dataConcluida": "Concluida"
 }
 
 ###
 
-DELETE http://localhost:3333/tarefa/01faeb6a-b51c-401c-b8d9-33bcdbb5a218
+DELETE http://localhost:3333/tarefa/6
 
-###
+
+
+
+
+
+
+### 
 
 POST http://localhost:3333/meta/create
 Content-Type: application/json
