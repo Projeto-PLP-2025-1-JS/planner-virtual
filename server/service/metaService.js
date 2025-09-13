@@ -1,42 +1,26 @@
-import { database } from "../database/database.js";
-import { metaModel } from "../model/metaModel.js";
+import metaRepository from '../repository/meta-repository.js'
 
+class MetaService {
+    
+    async createMeta(meta){
+        return await metaRepository.createMeta(meta)
+    }
 
-export const metaService = {
-    create: (metaData) => {
-        const meta = metaModel.parse(metaData);
-        try{
-        database.createMeta(meta);}
-        catch (error) {
-            throw new Error('Erro ao criar meta: ' + error.message);
-            console.log(error);
-        }
-    },
+    async getAllMetas(){
+        return await metaRepository.getAllMetas()
+    }
 
-    getMetas: (search) => {
-        try{
-            const metas = database.getMetas(search)
-            return metas;
-        }catch (e){
-            throw new Error('Erro ao buscar metas: ' + e.message);
-        }
-    },
+    async getMeta(id){
+        return await metaRepository.getMeta(id)
+    }
 
-    updateMeta: (id,metaData) => {
-        try{
-            const meta = metaModel.parse(metaData);
-            database.updateMeta(id,meta)
-        }catch (e){
-            throw new Error('Erro ao atualizar meta: ' + e.message);
-        }
-    },
+    async updateMeta(id,metaNova){
+        return await metaRepository.updateMeta(id,metaNova)
+    }
 
-    deleteMeta: (id) => {
-        try{
-            database.deleteMeta(id)
-        }
-        catch (e){
-            throw new Error("Erro ao deletar meta: " + e.message)
-        }
+    async deleteMeta(id){
+        return await metaRepository.deleteMeta(id)
     }
 }
+
+export default new MetaService();
