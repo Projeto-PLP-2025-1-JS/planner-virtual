@@ -2,7 +2,7 @@ POST http://localhost:3333/tarefa/create
 Content-Type: application/json
 
 {
-    "descricao": "teste1234567",
+    "descricao": "sddafgsdfgsdfgsdfgvbdfg",
     "categoria": "estudar",
     "status": "pendente",
     "dataCriacao": "2025-09-10T07:00:00Z",
@@ -41,21 +41,30 @@ DELETE http://localhost:3333/tarefa/01faeb6a-b51c-401c-b8d9-33bcdbb5a218
 POST http://localhost:3333/meta/create
 Content-Type: application/json
 
-{"descricao":"as","categoria":"financeiro",
-    "periodo":"semana","status":"pendente","dataCriacao":"2025-08-20","dataFinal":"2025-08-24"}
+{   "descricao":"Teste",
+    "categoria":"Financeiro",
+    "periodo":"semana",
+    "status":"Pendente",
+    "dataCriacao":"2025-08-20",
+    "dataFinal":"2025-08-24",
+    "dataConcluida":"2025-08-24"}
 
 ###
 
-GET  http://localhost:3333/meta/get
+GET  http://localhost:3333/meta/getAll
 
 ###
 
-PUT  http://localhost:3333/meta/update/438a4a3f-64df-4b20-90d6-791b37e46a8f
+GET  http://localhost:3333/meta/get/4
+
+###
+
+PUT  http://localhost:3333/meta/update/1
 Content-Type: application/json
 
-{"descricao":"Atualizado","categoria":"1212",
-    "periodo":"semana","status":"pendente","dataCriacao":"2025-08-20","dataFinal":"2025-08-24"}
+{"descricao":"Atualizando","categoria":"Financeiro",
+    "periodo":"semana","status":"Pendente","dataCriacao":"2025-08-20","dataFinal":"2025-08-24","dataConcluida":"2025-08-24"}
 
 ###
 
-DELETE http://localhost:3333/meta/delete/e0414508-b005-4a5f-8cc2-67cd069fd945
+DELETE http://localhost:3333/meta/delete/1
