@@ -11,15 +11,19 @@ class TarefaController {
       return reply.status(201).send(novaTarefa);
 
     } catch (error) {
-      // Agora, qualquer erro será um erro genérico do servidor ou do banco
-      console.error(error); // Adicione um log para ver o erro no terminal
+      console.error(error); 
       return reply.status(500).send({ message: 'Erro ao criar a tarefa.' });
     }
   }
 
   async listar() {
-    const tarefas = await this.tarefaService.listar()
+    const tarefas = await tarefaService.listar()
     return tarefas
+  }
+  async getTarefa(request) {
+    const tarefaId = request.params.id
+    const tarefa = await tarefaService.getTarefa(tarefaId)
+    return tarefa;
   }
 
   async atualizar (request, reply) {
@@ -28,7 +32,10 @@ class TarefaController {
       await tarefaService.atualizarTarefa(tarefaId,request.body)
       return reply.status(204).send()
     } catch (error) {
-      return reply.status(400).send({ message: 'Erro na validação da tarefa.', errors: error.issues })
+      if (error.message === 'Tarefa não encontrada.') {
+        return reply.status(404).send({ message: error.message });
+      }
+      return reply.status(400).send({ message: 'Erro na validação da tarefa.'})
     }
 
   }
@@ -39,10 +46,8 @@ async deletar (request, reply) {
     return reply.status(204).send();
   } catch (error) {
     if (error.message === 'Tarefa não encontrada.') {
-      // Retorna 404 para recursos que não existem
       return reply.status(404).send({ message: error.message });
     }
-    // Para outros erros inesperados, retorna 500
     return reply.status(500).send({ message: 'Erro interno do servidor.' });
   }
   }

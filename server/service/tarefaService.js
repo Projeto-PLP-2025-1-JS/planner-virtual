@@ -10,16 +10,20 @@ class TarefaService {
         return await tarefaRepository.list();
     }
 
+    async getTarefa (tarefaId) {
+        return await tarefaRepository.findById(tarefaId)
+    }
+
     async atualizarTarefa (tarefaId, tarefa) {
         const tarefaExists = await tarefaRepository.findById(tarefaId);
         if(!tarefaExists){
             throw new Error('Tarefa não encontrada.');
         }
-        return await metaRepository.update(id, tarefa);
+        return await tarefaRepository.update(tarefaId, tarefa);
     }
 
     async deleteTarefa (tarefaId) {
-        const tarefaValida = await tarefaRepository.findById(id);
+        const tarefaValida = await tarefaRepository.findById(tarefaId);
         if(!tarefaValida){
             throw new Error('Tarefa não encontrada.');
         }

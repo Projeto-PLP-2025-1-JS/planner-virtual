@@ -10,13 +10,11 @@ class TarefaRepository {
   }
 
   async update(id, tarefa) {
-    const [affectedRows] = await Tarefa.update(tarefa, { where: { id } });
-    return affectedRows > 0;
+    await Tarefa.update(tarefa, { where: { id } });
   }
 
   async delete(id) {
-    const deletedRows = await Tarefa.destroy({ where: { id } });
-    return deletedRows > 0;
+    await Tarefa.destroy({ where: { id } });
   }
 
   async findById(id) {
