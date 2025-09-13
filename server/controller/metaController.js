@@ -1,51 +1,76 @@
-
+import { Transaction } from 'sequelize'
+import metaService from '../service/metaService.js'
 
 export class metaController {
-    constructor(metaService){
-        this.metaService = metaService
-    }
 
-    async create(request,reply) {
-        try{
-            await this.metaService.create(request.body)
-            return reply.status(201).send()
+    async createMeta(request,reply) {
+        try {   
+            const meta = request.body
+            const result = await metaService.createMeta(meta)
+            reply.status(201).send(result)
         }
-        catch(e){
-            return reply.status(400).send(e.message)
-            
+        catch (e){
+            reply.status(400).send({error: 'Erro ao criar meta: ' + e.message})
         }
     }
 
     async getMetas(request,reply){
-        try{
-            const {search} = request.query
-            const metas = await this.metaService.getMetas(search)
-            return reply.status(200).send(metas)
-        }catch(e){
-            return reply.status(400).send(e.message)
+        try {   
+            const metas = await metaService.getAllMetas()
+            reply.status(200).send(metas)
         }
-    
-}
+        catch (e){
+            reply.status(400).send({error: 'Erro ao conseguir as meta: ' + e.message})
+        }
+    }
+
+    async getMeta(request,reply){
+        try {   
+            const id = request.params.id
+            const meta = await metaService.getMeta(id)
+            if (meta === null) 
+                {
+            return reply.status(404).send({
+                error: 'Meta com ID ' + id +  ' não encontrada.'
+            });
+            }
+        reply.status(200).send(meta)
+        }
+        catch (e){
+            reply.status(400).send({error: 'Erro ao conseguir a meta de id '+ id + ': ' + e.message})
+        }
+    }
 
     async updateMeta (request,reply){
         try{
-            const idUsuario = request.params.id
-            const metaAtualizada = request.body
-            await this.metaService.updateMeta(idUsuario,metaAtualizada)
-            return reply.status(204).send()
-        }catch(e){
-            return reply.status(400).send('Erro ao atualizar tarefa: '+ e.message)
+            const id = request.params.id
+            const metaNova = request.body
+            const metaAtualizada = await metaService.updateMeta(id,metaNova)
+            if(!metaAtualizada){
+                return reply.status(404).send({error: 'Erro ao encontrar meta.'})
+            }
+            reply.status(200).send(metaAtualizada)
+
+        }
+        catch(e){
+            reply.status(400).send({error: 'Erro ao atualizar meta:' + e.message})
         }
     }
 
     async deleteMeta(request,reply){
-        try{
-            const idDeletar = request.params.id
-            await this.metaService.deleteMeta(idDeletar)
-            return reply.status(204).send()
-        }catch(e){
-            return reply.status(400).send('Erro ao deletar meta:'+ e.message)
-        }
+       try{
+            const id = request.params.id
+            const metaDeletada = await metaService.deleteMeta(id)
+            if(!metaDeletada){
+                return reply.status(404).send({error: 'Erro ao encontrar meta.'})
+            }
+            reply.status(200).send('Meta deletada')
+       }
+       catch(e){
+            reply.status(400).send({error: 'Erro ao deletar meta: '+e.message})
+       }
     }
 
 }
+
+export default new metaController();
