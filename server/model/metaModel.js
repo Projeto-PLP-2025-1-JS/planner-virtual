@@ -14,11 +14,11 @@ descricao:{
     allowNull:false
 },
 categoria: {
-    type: DataTypes.ENUM('Financeiro', 'Manutencao', 'Saude', 'Estudos'),
+    type: DataTypes.ENUM('financeiro', 'manutencao', 'saude', 'estudos'),
     allowNull: false
 },
 status:{
-    type: DataTypes.ENUM('Pendente', 'Sucesso', 'Parcial', 'Falha'),
+    type: DataTypes.ENUM('pendente', 'sucesso', 'parcial', 'falha'),
     allowNull: false
 },
 dataCriacao:{
