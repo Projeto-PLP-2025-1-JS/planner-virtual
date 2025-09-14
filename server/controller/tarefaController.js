@@ -29,8 +29,8 @@ class TarefaController {
   async atualizar (request, reply) {
       const tarefaId = request.params.id
       try {
-      await tarefaService.atualizarTarefa(tarefaId,request.body)
-      return reply.status(204).send()
+      const tarefaAtualizada = await tarefaService.atualizarTarefa(tarefaId,request.body)
+      return reply.status(200).send(tarefaAtualizada)
     } catch (error) {
       if (error.message === 'Tarefa não encontrada.') {
         return reply.status(404).send({ message: error.message });

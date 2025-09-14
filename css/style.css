@@ -1,31 +1,174 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  background-color: #f4f4f4;
-}
 
-form {
-  margin-bottom: 20px;
-}
-
-.meta {
-  background: white;
+.tarefa {
   padding: 10px;
   margin-bottom: 5px;
   border-left: 5px solid #ccc;
 }
 
+.meta { 
+  padding: 10px;
+  margin-bottom: 5px;
+  border-left: 5px solid #ccc;
+}
+  
 .meta.sucesso { border-color: green; }
 .meta.parcial { border-color: orange; }
 .meta.falha { border-color: red; }
 
-.tarefa {
-  background: white;
-  padding: 10px;
-  margin-bottom: 5px;
-  border-left: 5px solid #ccc;
-}
+
 
 .tarefa.executada { border-color: green; }
 .tarefa.parcial { border-color: orange; }
 .tarefa.atrasada { border-color: red; }
+
+/* General Body Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #282c34; /* Dark background, common in code editors */
+    color: #abb2bf; /* Light gray text for readability */
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header Styles */
+h1 {
+    color: #61dafb; /* A bright cyan, often used for keywords */
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+}
+
+h2, h3 {
+    color: #e5c07b; /* A warm yellow, often used for functions or classes */
+    border-bottom: 2px solid #3a3f4b;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+/* Section/Card Styles */
+section {
+    background-color: #21252b; /* Slightly lighter dark shade for cards */
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
+/* Input and Select Fields */
+input[type="text"],
+input[type="time"],
+select {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #3a3f4b;
+    border-radius: 8px;
+    background-color: #282c34;
+    color: #abb2bf;
+    font-size: 1em;
+    min-width: 150px; /* Ensures fields don't get too small */
+}
+
+input[type="text"]:focus,
+input[type="time"]:focus,
+select:focus {
+    outline: none;
+    border-color: #61dafb;
+    box-shadow: 0 0 5px rgba(97, 218, 251, 0.5);
+}
+
+/* Button Styles */
+button[type="submit"] {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #98c379; /* Green for positive actions, like 'add' */
+    color: #21252b;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #a6d18b;
+    transform: translateY(-2px);
+}
+
+/* Filter Section */
+.filtros {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #282c34;
+    border-radius: 8px;
+}
+
+.filtros label {
+    font-weight: bold;
+    color: #e5c07b;
+}
+
+/* Lists for Goals and Tasks */
+#lista-metas,
+#lista-tarefas {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Individual item styling (add a class like .meta-item or .tarefa-item in your JS) */
+.meta-item, .tarefa-item {
+    background-color: #282c34;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid #61dafb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.meta-item.completed, .tarefa-item.completed {
+    border-left-color: #98c379;
+    text-decoration: line-through;
+    color: #5c6370; /* Muted color for completed items */
+}
+
+
+/* Responsive Design for smaller screens */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filtros {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
