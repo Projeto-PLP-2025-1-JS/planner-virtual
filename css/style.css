@@ -1,125 +1,22 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  background-color: #f4f4f4;
-}
 
-form {
-  margin-bottom: 20px;
-}
-
-.meta {
-  background: white;
+.tarefa {
   padding: 10px;
   margin-bottom: 5px;
   border-left: 5px solid #ccc;
 }
 
+.meta { 
+  padding: 10px;
+  margin-bottom: 5px;
+  border-left: 5px solid #ccc;
+}
+  
 .meta.sucesso { border-color: green; }
 .meta.parcial { border-color: orange; }
 .meta.falha { border-color: red; }
 
-.tarefa {
-  background: white;
-  padding: 10px;
-  margin-bottom: 5px;
-  border-left: 5px solid #ccc;
-}
+
 
 .tarefa.executada { border-color: green; }
 .tarefa.parcial { border-color: orange; }
 .tarefa.atrasada { border-color: red; }
-
-/* --- Layout geral --- */
-section {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px #0001;
-  padding: 24px 20px 20px 20px;
-  margin-bottom: 32px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 32px;
-  letter-spacing: 1px;
-}
-
-h2, h3 {
-  color: #444;
-  margin-top: 0;
-}
-
-.filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 16px;
-  align-items: center;
-}
-
-.filtros label {
-  font-weight: bold;
-  margin-right: 4px;
-}
-
-input[type="text"], select, input[type="time"] {
-  padding: 6px 10px;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  margin-right: 8px;
-  margin-bottom: 8px;
-  font-size: 15px;
-  background: #f9f9f9;
-  transition: border 0.2s;
-}
-
-input[type="text"]:focus, select:focus, input[type="time"]:focus {
-  border-color: #2196f3;
-  outline: none;
-}
-
-button[type="submit"], button {
-  background: #2196f3;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 7px 16px;
-  font-size: 15px;
-  cursor: pointer;
-  margin-right: 6px;
-  margin-top: 4px;
-  transition: background 0.2s;
-}
-
-button[type="submit"]:hover, button:hover {
-  background: #1769aa;
-}
-
-button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-#lista-metas, #lista-tarefas {
-  margin-top: 10px;
-}
-
-/* Responsivo */
-@media (max-width: 600px) {
-  section {
-    padding: 12px 4px;
-  }
-  .filtros {
-    flex-direction: column;
-    gap: 8px;
-  }
-  input[type="text"], select, input[type="time"] {
-    width: 100%;
-    margin-right: 0;
-  }
-}

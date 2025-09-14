@@ -11,6 +11,7 @@ class TarefaRepository {
 
   async update(id, tarefa) {
     await Tarefa.update(tarefa, { where: { id } });
+    return tarefa;
   }
 
   async delete(id) {

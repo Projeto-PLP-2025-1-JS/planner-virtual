@@ -1,0 +1,212 @@
+/* Importação da fonte e variáveis */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+:root {
+  --primary-clr: #b38add;
+  --dark-text: #333;
+  --light-text: #878895;
+  --bg-color: #e2e1dc;
+  --container-bg: #fff;
+  --border-color: #f0f0f0;
+}
+
+/* Estilos Globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--dark-text);
+  padding: 20px;
+}
+
+/* Layout Principal */
+.app-container {
+  display: flex;
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.calendar-container {
+  flex: 0 0 450px; /* Não cresce, não encolhe, base de 450px */
+}
+
+.planner-container {
+  flex: 1; /* Ocupa o espaço restante */
+  background-color: var(--container-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  height: fit-content;
+}
+
+h1, h2, h3 {
+    margin-bottom: 15px;
+}
+
+#planner-title {
+    color: var(--primary-clr);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+/* Estilos do Calendário */
+.calendar {
+  width: 100%;
+  padding: 20px;
+  color: var(--light-text);
+  border-radius: 8px;
+  background-color: var(--container-bg);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.month {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.month .prev, .month .next {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.month .prev:hover, .month .next:hover {
+  color: var(--primary-clr);
+}
+
+.weekdays {
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.weekdays div {
+  flex: 1;
+  text-align: center;
+  padding: 15px 0;
+}
+
+.days {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.days .day {
+  flex: 1 0 14.28%; /* 100% / 7 */
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--dark-text);
+  border: 1px solid #f5f5f5;
+  transition: background-color 0.2s, color 0.2s;
+  position: relative; /* Para o indicador de tarefa */
+}
+
+.days .day:not(.prev-date, .next-date):hover {
+  color: #fff;
+  background-color: var(--primary-clr);
+}
+
+.days .prev-date, .days .next-date {
+  color: #b3b3b3;
+}
+
+.days .active {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--primary-clr);
+}
+
+.days .today {
+  font-weight: 600;
+  border: 1px solid var(--primary-clr);
+}
+
+/* NOVO: Indicador de tarefa */
+.day.has-task::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    width: 6px;
+    height: 6px;
+    background-color: var(--primary-clr);
+    border-radius: 50%;
+}
+.day.active.has-task::after {
+    background-color: #fff;
+}
+
+
+/* Estilos do Planner (Formulários e Listas) */
+.planner-section {
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+input[type="text"], input[type="time"], select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+
+button {
+    padding: 8px 15px;
+    background-color: var(--primary-clr);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+button:hover {
+    opacity: 0.9;
+}
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.filtros {
+    margin-bottom: 15px;
+}
+
+#lista-tarefas .tarefa, #lista-metas .meta {
+    background-color: #fafafa;
+    border-left: 4px solid var(--primary-clr);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+#lista-tarefas .tarefa.executada, #lista-metas .meta.sucesso {
+    border-left-color: #28a745; /* Verde */
+}
+#lista-tarefas .tarefa.parcial, #lista-metas .meta.parcial {
+    border-left-color: #ffc107; /* Amarelo */
+}
+#lista-tarefas .tarefa.atrasada, #lista-metas .meta.falha {
+    border-left-color: #dc3545; /* Vermelho */
+}

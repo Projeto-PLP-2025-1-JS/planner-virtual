@@ -4,7 +4,7 @@ const formMeta = document.getElementById('form-meta');
 const filtroPeriodo = document.getElementById('filtro-periodo');
 const filtroCategoria = document.getElementById('filtro-categoria');
 const btnLimparMetas = document.getElementById('btn-limpar-metas');
-const listaMetasDiv = document.getElementById('lista-metas'); // <-- faltava isso
+const listaMetasDiv = document.getElementById('lista-metas'); 
 
 formMeta.addEventListener('submit', async e => {
   e.preventDefault();
