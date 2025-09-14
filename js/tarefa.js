@@ -4,9 +4,9 @@ class Tarefa {
     this.descricao = descricao;
     this.categoria = categoria;
     this.status = 'pendente';
-    this.horaCriacao = this.getHoraAtual();
-    this.horaFinal = this.stringParaDate(horaFinalStr);
-    this.horaConclusao = null; // 'HH:MM' se concluída
+    this.dataCriacao = this.getHoraAtual();
+    this.dataFinal = this.stringParaDate(horaFinalStr);
+    this.dataConclusao = null; // 'HH:MM' se concluída
   }
 
   getHoraAtual() {
@@ -32,7 +32,7 @@ class Tarefa {
   }
 
   atualizarStatus(novoStatus) {
-    const statusValidos = ['pendente', 'executada', 'parcial', 'atrasada'];
+    const statusValidos = ['Pendente', 'Executada', 'Parcial', 'Atrasada'];
     if (statusValidos.includes(novoStatus)) {
       this.status = novoStatus;
     }

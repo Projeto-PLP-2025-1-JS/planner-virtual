@@ -1,80 +1,135 @@
-let tarefas = [];
-let proximoIdTarefa = 1;
-
-// Cria uma nova tarefa
-function criarTarefa(descricao, categoria, horaFinalStr) {
-    const novaTarefa = new Tarefa(proximoIdTarefa++, descricao, categoria, horaFinalStr);
-    tarefas.push(novaTarefa);
-    salvarTarefas();
+// Cria uma nova tarefa e recarrega do backend
+async function criarTarefa(descricao, categoria, horaFinalStr) {
+  const novaTarefa = new Tarefa(null, descricao, categoria, horaFinalStr);
+  await salvarTarefaServer(novaTarefa);
+  await carregarERenderTarefas();
 }
 
-// Lista tarefas (pode receber categoria ou apenas retornar todas)
-function listarTarefas(categoria = '') {
-  if (categoria === '') return tarefas;
-  return tarefas.filter(t => t.categoria === categoria);
-}
-
-// Salva tarefas no localStorage
-function salvarTarefas() {
-  localStorage.setItem('tarefas', JSON.stringify(tarefas));
-  localStorage.setItem('proximoIdTarefa', proximoIdTarefa);
-  salvarTarefasServer(tarefas[0]);
-}
-
-async function salvarTarefasServer(tarefas) {
+// Salva tarefa no backend
+async function salvarTarefaServer(tarefa) {
   try {
     const response = await fetch('http://localhost:3333/tarefa/create', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(tarefas)
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(tarefa)
     });
-    if (!response.ok) throw new Error('Erro ao salvar tarefas');
+    if (!response.ok) throw new Error('Erro ao salvar tarefa');
   } catch (error) {
     console.error(error);
   }
 }
 
-// Carrega tarefas do localStorage
-function carregarTarefas() {
-  const dados = JSON.parse(localStorage.getItem("tarefas") || "[]");
-  tarefas = dados.map(d => {
-    const tarefa = new Tarefa(d.id, d.descricao, d.categoria, d.horaFinal);
-    tarefa.status = d.status;
-    tarefa.horaCriacao = d.horaCriacao;
-    tarefa.horaFinal = d.horaFinal ? new Date(d.horaFinal) : null;
-    return tarefa;
-  });
-  proximoIdTarefa = parseInt(localStorage.getItem('proximoIdTarefa')) || tarefas.length + 1;
-}
-
-function deletarTarefaId(id) {
-  const index = tarefas.findIndex(t => t.id === id);
-  if (index !== -1) {
-    tarefas.splice(index, 1);
-    salvarTarefas();
-    renderTarefas(); 
+// Deleta tarefa no backend e recarrega
+async function deletarTarefaId(id) {
+  try {
+    const response = await fetch(`http://localhost:3333/tarefa/${id}`, { method: 'DELETE' });
+    if (!response.ok) throw new Error('Erro ao deletar tarefa');
+    await carregarERenderTarefas();
+  } catch (error) {
+    console.error(error);
   }
 }
 
-function atualizarStatusTarefa(id, status) {
-  const tarefa = tarefas.find(t => t.id === id);
-  if (tarefa) {
-    tarefa.atualizarStatus(status);
-    salvarTarefas();
-    renderTarefas();
+// Atualiza status da tarefa e recarrega
+async function atualizarStatusTarefa(id, status) {
+  try {
+    // Busca tarefa atual direto do backend
+    const responseGet = await fetch(`http://localhost:3333/tarefa/${id}`);
+    const tarefa = await responseGet.json();
+    tarefa.status = status;
+
+    const responsePut = await fetch(`http://localhost:3333/tarefa/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(tarefa)
+    });
+    if (!responsePut.ok) throw new Error('Erro ao atualizar tarefa');
+
+    await carregarERenderTarefas();
+  } catch (error) {
+    console.error(error);
   }
 }
 
-function atualizarStatusTarefasAtrasadas() {
+// Função única que carrega tarefas do backend e renderiza
+async function carregarERenderTarefas() {
+  try {
+    const response = await fetch('http://localhost:3333/tarefas');
+    if (!response.ok) throw new Error('Erro ao carregar tarefas');
+    const data = await response.json();
+
+    // Converte datas para objetos Date
+    const tarefasFormatadas = data.map(d => {
+      const tarefa = new Tarefa(d.id, d.descricao, d.categoria, d.horaFinal);
+      tarefa.status = d.status;
+      tarefa.horaCriacao = d.horaCriacao ? new Date(d.horaCriacao) : null;
+      tarefa.horaFinal = d.horaFinal ? new Date(d.horaFinal) : null;
+      tarefa.horaConclusao = d.horaConclusao ? new Date(d.horaConclusao) : null;
+      return tarefa;
+    });
+
+    renderTarefas(tarefasFormatadas);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Função de renderização recebe os dados como parâmetro
+function renderTarefas(tarefas) {
+  const listaTarefasDiv = document.getElementById('lista-tarefas');
+  listaTarefasDiv.innerHTML = '';
+
   const agora = new Date();
-  tarefas.forEach(t => {
-    if (t.status === 'pendente' && t.horaFinal && agora > t.horaFinal) {
-      t.status = 'atrasada';
+  tarefas.forEach(tarefa => {
+    if (tarefa.status === 'pendente' && tarefa.horaFinal && agora > tarefa.horaFinal) {
+      tarefa.status = 'atrasada';
     }
+
+    const div = document.createElement('div');
+    div.className = `tarefa ${tarefa.status}`;
+    div.innerHTML = `
+      <strong>${tarefa.descricao}</strong> (${tarefa.categoria})<br>
+      Status: ${tarefa.status}<br>
+      Hora final: ${tarefa.horaFinal ? tarefa.horaFinal.toTimeString().slice(0,5) : '-'}<br>
+    `;
+
+    const btnExecutada = document.createElement('button');
+    btnExecutada.textContent = '✅';
+    btnExecutada.addEventListener('click', async () => {
+      await atualizarStatusTarefa(tarefa.id, 'executada');
+    });
+
+    const btnParcial = document.createElement('button');
+    btnParcial.textContent = '⚠';
+    btnParcial.addEventListener('click', async () => {
+      await atualizarStatusTarefa(tarefa.id, 'parcial');
+    });
+
+    const btnDeletar = document.createElement('button');
+    btnDeletar.textContent = '🗑️';
+    btnDeletar.addEventListener('click', async () => {
+      await deletarTarefaId(tarefa.id);
+    });
+
+    div.appendChild(btnExecutada);
+    div.appendChild(btnParcial);
+    div.appendChild(btnDeletar);
+
+    listaTarefasDiv.appendChild(div);
   });
-  salvarTarefas();
 }
 
-carregarTarefas();
+// Evento do formulário
+const formTarefa = document.getElementById('form-tarefa');
+formTarefa.addEventListener('submit', async e => {
+  e.preventDefault();
+  const descricao = document.getElementById('descricao-tarefa').value;
+  const categoria = document.getElementById('categoria-tarefa').value;
+  const horaFinal = document.getElementById('hora-final-tarefa').value;
+
+  await criarTarefa(descricao, categoria, horaFinal);
+  formTarefa.reset();
+});
+
+// Carrega e renderiza ao iniciar
+carregarERenderTarefas();
