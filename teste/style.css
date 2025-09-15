@@ -208,7 +208,7 @@ button:disabled {
 #lista-tarefas .tarefa.parcial, #lista-metas .meta.parcial {
     border-left-color: #ffc107; /* Amarelo */
 }
-#lista-tarefas .tarefa.atrasada, #lista-metas .meta.falha {
+#lista-tarefas .tarefa.atrasada, #lista-metas .meta.falhou {
     border-left-color: #dc3545; /* Vermelho */
 }
 

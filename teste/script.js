@@ -472,13 +472,13 @@ async function atualizarStatusExpirados() {
 
     for (const id of tarefas) {
         console.log(`%cEnviando requisição PUT para TAREFA ${id} como 'Falhou'.`, 'color: orange');
-        await enviarAtualizacaoDeStatus('tarefa', id, 'Falhou');
+        await enviarAtualizacaoDeStatus('tarefa', id, 'atrasada');
         algumaCoisaMudou = true;
     }
 
     for (const id of metas) {
         console.log(`%cEnviando requisição PUT para META ${id} como 'Falhou'.`, 'color: orange');
-        await enviarAtualizacaoDeStatus('meta', id, 'Falhou');
+        await enviarAtualizacaoDeStatus('meta', id, 'falhou');
         algumaCoisaMudou = true;
     }
     
