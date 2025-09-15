@@ -47,9 +47,9 @@ POST http://localhost:3333/meta/create
 Content-Type: application/json
 
 {   "descricao":"Teste",
-    "categoria":"Financeiro",
+    "categoria":"financeiro",
     "periodo":"semana",
-    "status":"Pendente",
+    "status":"pendente",
     "dataCriacao":"2025-08-20",
     "dataFinal":"2025-08-24",
     "dataConcluida":"2025-08-24"}
@@ -64,12 +64,29 @@ GET  http://localhost:3333/meta/get/4
 
 ###
 
-PUT  http://localhost:3333/meta/update/1
+PUT  http://localhost:3333/meta/update/5
 Content-Type: application/json
 
-{"descricao":"Atualizando","categoria":"Financeiro",
-    "periodo":"semana","status":"Pendente","dataCriacao":"2025-08-20","dataFinal":"2025-08-24","dataConcluida":"2025-08-24"}
+{"descricao":"Atualizando","categoria":"financeiro",
+    "periodo":"semana","status":"Parcial","dataCriacao":"2025-08-20","dataFinal":"2025-08-24","dataConcluida":"2025-08-24"}
 
 ###
 
 DELETE http://localhost:3333/meta/delete/1
+
+###
+
+POST http://localhost:3333/lembrete/create
+Content-Type: application/json
+
+{
+  "descricao": "Estudar para a prova de PLP"
+}
+
+###
+
+get http://localhost:3333/lembrete/getAll
+
+###
+
+delete http://localhost:3333/lembrete/delete/1

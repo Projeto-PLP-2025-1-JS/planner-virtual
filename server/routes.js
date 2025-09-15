@@ -1,5 +1,6 @@
 import tarefaController from './controller/tarefaController.js';
 import metaController from './controller/metaController.js';
+import lembreteController from './controller/lembreteController.js';
 
 export function appRoutes (server){
 
@@ -17,6 +18,14 @@ export function appRoutes (server){
     server.get('/meta/getAll',metaController.getMetas);
     server.put('/meta/update/:id',metaController.updateMeta);
     server.delete('/meta/delete/:id',metaController.deleteMeta);
+
+    //
+    server.post('/lembrete/create',lembreteController.createLembrete)
+    server.delete('/lembrete/delete/:id',lembreteController.deleteLembrete)
+    server.get('/lembrete/getAll',lembreteController.getAllLembretes)
+
+
+    
 }
 
     
