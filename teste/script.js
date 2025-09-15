@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch(`${API_BASE_URL}/tarefa/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status })
+                body: JSON.stringify({ status , dataConcluida: status === 'executada' ? new Date().toISOString() : null})
             });
             if (!response.ok) throw new Error('Erro ao atualizar status.');
 
@@ -183,6 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
                  tarefas[index] = { ...tarefas[index], ...tarefaAtualizada };
             }
             renderTarefas();
+            analisarEstatisticas();
         } catch (error) {
             console.error(error);
             alert('Falha ao atualizar o status da tarefa.');
@@ -293,12 +294,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch(`${API_BASE_URL}/meta/update/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: status }) // O backend aceita string
+                body: JSON.stringify({ status: status, dataConcluida: new Date().toISOString().slice(0, 10) }) // O backend aceita string
             });
             if (!response.ok) throw new Error('Erro ao atualizar status da meta.');
             
             await carregarMetas();
             renderMetas();
+            analisarEstatisticas();
         } catch (error) {
             console.error(error);
             alert('Falha ao atualizar o status da meta.');
@@ -327,6 +329,190 @@ document.addEventListener("DOMContentLoaded", () => {
             listaMetasDiv.appendChild(div);
         });
     }
+
+    // ===================================================================
+// LÓGICA DE ANÁLISE E ESTATÍSTICAS
+// ===================================================================
+
+// Seleciona os elementos do DOM que acabamos de criar no HTML
+const tarefasHojeSpan = document.getElementById('tarefas-hoje');
+const tarefasSemanaSpan = document.getElementById('tarefas-semana');
+const tarefasMesSpan = document.getElementById('tarefas-mes');
+const metasSemanaSpan = document.getElementById('metas-semana');
+const metasMesSpan = document.getElementById('metas-mes');
+
+function analisarEstatisticas() {
+    // Define os status que consideramos como "concluído"
+    const TAREFA_STATUS_CONCLUIDA = 'executada';
+    const META_STATUS_SUCESSO = 'Sucesso';
+
+    // --- Lógica de Datas ---
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0); // Zera a hora para comparar apenas a data
+
+    // Calcula o início e o fim da semana atual (Domingo a Sábado)
+    const inicioSemana = new Date(hoje);
+    inicioSemana.setDate(hoje.getDate() - hoje.getDay()); // Vai para o último domingo
+    
+    const fimSemana = new Date(inicioSemana);
+    fimSemana.setDate(inicioSemana.getDate() + 6);
+    fimSemana.setHours(23, 59, 59, 999); // Define o final do dia de sábado
+
+    // Calcula o início e o fim do mês atual
+    const inicioMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+    const fimMes = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
+    fimMes.setHours(23, 59, 59, 999); // Define o final do último dia do mês
+
+    // --- Contagem de Tarefas ---
+    const tarefasConcluidas = tarefas.filter(t => t.status === TAREFA_STATUS_CONCLUIDA && t.dataConcluida);
+
+    const tarefasHoje = tarefasConcluidas.filter(t => {
+        const dataConcluida = new Date(t.dataConcluida);
+        return dataConcluida.toDateString() === hoje.toDateString();
+    }).length;
+
+    const tarefasSemana = tarefasConcluidas.filter(t => {
+        const dataConcluida = new Date(t.dataConcluida);
+        return dataConcluida >= inicioSemana && dataConcluida <= fimSemana;
+    }).length;
+
+    const tarefasMes = tarefasConcluidas.filter(t => {
+        const dataConcluida = new Date(t.dataConcluida);
+        return dataConcluida >= inicioMes && dataConcluida <= fimMes;
+    }).length;
+
+    // --- Contagem de Metas ---
+    const metasSucesso = metas.filter(m => m.status === META_STATUS_SUCESSO && m.dataConcluida);
+
+    const metasSemana = metasSucesso.filter(m => {
+        const dataConcluida = new Date(m.dataConcluida);
+        return dataConcluida >= inicioSemana && dataConcluida <= fimSemana;
+    }).length;
+
+    const metasMes = metasSucesso.filter(m => {
+        const dataConcluida = new Date(m.dataConcluida);
+        return dataConcluida >= inicioMes && dataConcluida <= fimMes;
+    }).length;
+
+    // --- Atualiza o HTML com os valores ---
+    tarefasHojeSpan.textContent = tarefasHoje;
+    tarefasSemanaSpan.textContent = tarefasSemana;
+    tarefasMesSpan.textContent = tarefasMes;
+    metasSemanaSpan.textContent = metasSemana;
+    metasMesSpan.textContent = metasMes;
+
+    
+}
+
+// ===================================================================
+// LÓGICA DE VERIFICAÇÃO DE PRAZOS (VERSÃO DE DEPURAÇÃO)
+// ===================================================================
+
+function encontrarItensExpirados() {
+    console.log("Dentro de encontrarItensExpirados...");
+    const agora = new Date();
+    console.log(`%cHORA ATUAL (do seu navegador): ${agora.toLocaleString('pt-BR')}`, 'color: blue');
+    
+    const itensParaAtualizar = {
+        tarefas: [],
+        metas: []
+    };
+
+    tarefas.forEach(tarefa => {
+        // Ignora tarefas que não estão pendentes
+        if (tarefa.status !== 'pendente') return;
+
+        const dataFinal = new Date(tarefa.dataFinal);
+        
+        // LOG DETALHADO POR TAREFA
+        console.group(`Verificando Tarefa ID: ${tarefa.id} - "${tarefa.descricao}"`);
+        console.log(`Status Atual: ${tarefa.status}`);
+        console.log(`Prazo (dataFinal): ${tarefa.dataFinal}`);
+        console.log(`Prazo convertido para Data: ${dataFinal.toLocaleString('pt-BR')}`);
+        console.log(`A condição (prazo < agora) é: ${dataFinal < agora}`);
+        console.groupEnd();
+
+        if (dataFinal < agora) {
+            itensParaAtualizar.tarefas.push(tarefa.id);
+        }
+    });
+
+    metas.forEach(meta => {
+        if (meta.status !== 'Pendente') return;
+
+        const dataFinal = new Date(meta.dataFinal);
+        dataFinal.setHours(23, 59, 59, 999); // Ajusta para o fim do dia
+
+        console.group(`Verificando Meta ID: ${meta.id} - "${meta.descricao}"`);
+        console.log(`Status Atual: ${meta.status}`);
+        console.log(`Prazo (dataFinal): ${meta.dataFinal}`);
+        console.log(`Prazo convertido e ajustado para FIM DO DIA: ${dataFinal.toLocaleString('pt-BR')}`);
+        console.log(`A condição (prazo < agora) é: ${dataFinal < agora}`);
+        console.groupEnd();
+        
+        if (dataFinal < agora) {
+            itensParaAtualizar.metas.push(meta.id);
+        }
+    });
+    
+    console.log("Itens expirados encontrados:", itensParaAtualizar);
+    return itensParaAtualizar;
+}
+
+async function atualizarStatusExpirados() {
+    console.log("%c--- EXECUTANDO VERIFICAÇÃO PERIÓDICA DE ITENS EXPIRADOS ---", 'background: #222; color: #bada55');
+    const { tarefas, metas } = encontrarItensExpirados();
+
+    if (tarefas.length === 0 && metas.length === 0) {
+        console.log("Nenhum item expirado encontrado nesta verificação.");
+        return; // Sai da função se não houver nada para fazer
+    }
+
+    let algumaCoisaMudou = false;
+
+    for (const id of tarefas) {
+        console.log(`%cEnviando requisição PUT para TAREFA ${id} como 'Falhou'.`, 'color: orange');
+        await enviarAtualizacaoDeStatus('tarefa', id, 'Falhou');
+        algumaCoisaMudou = true;
+    }
+
+    for (const id of metas) {
+        console.log(`%cEnviando requisição PUT para META ${id} como 'Falhou'.`, 'color: orange');
+        await enviarAtualizacaoDeStatus('meta', id, 'Falhou');
+        algumaCoisaMudou = true;
+    }
+    
+    if (algumaCoisaMudou) {
+        console.log("Recarregando dados após atualizar itens expirados.");
+        await carregarTarefas();
+        await carregarMetas();
+        renderTarefas();
+        renderMetas();
+        analisarEstatisticas();
+    }
+}
+
+async function enviarAtualizacaoDeStatus(tipo, id, status) {
+    try {
+        const url = `${API_BASE_URL}/${tipo}/${tipo === 'meta' ? 'update/' : ''}${id}`;
+        console.log(`Montando requisição PUT para a URL: ${url}`);
+        
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: status })
+        });
+
+        if (!response.ok) {
+            console.error(`ERRO na resposta do backend para ${tipo} ${id}. Status: ${response.status}`);
+            throw new Error(`Erro ao atualizar ${tipo} ${id}`);
+        } else {
+            console.log(`%cSUCESSO ao atualizar ${tipo} ${id}.`, 'color: green');
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
 
     // ===================================================================
     // INICIALIZAÇÃO E EVENT LISTENERS
@@ -373,6 +559,9 @@ document.addEventListener("DOMContentLoaded", () => {
         initCalendar();
         renderTarefas();
         renderMetas();
+        analisarEstatisticas();
+        atualizarStatusExpirados(); // Verificação inicial imediata
+        setInterval(atualizarStatusExpirados, 60 * 1000); // A cada 1 minuto
     }
 
     initApp();
