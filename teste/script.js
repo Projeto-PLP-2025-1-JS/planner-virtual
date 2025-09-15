@@ -333,75 +333,89 @@ document.addEventListener("DOMContentLoaded", () => {
     // ===================================================================
 // LÓGICA DE ANÁLISE E ESTATÍSTICAS
 // ===================================================================
-
-// Seleciona os elementos do DOM que acabamos de criar no HTML
-const tarefasHojeSpan = document.getElementById('tarefas-hoje');
-const tarefasSemanaSpan = document.getElementById('tarefas-semana');
-const tarefasMesSpan = document.getElementById('tarefas-mes');
+const tarefasHojeRatioSpan = document.getElementById('tarefas-hoje-ratio');
+const tarefasHojeProgress = document.getElementById('tarefas-hoje-progress');
+const tarefasSemanaRatioSpan = document.getElementById('tarefas-semana-ratio');
+const tarefasSemanaProgress = document.getElementById('tarefas-semana-progress');
+const tarefasMesRatioSpan = document.getElementById('tarefas-mes-ratio');
+const tarefasMesProgress = document.getElementById('tarefas-mes-progress');
 const metasSemanaSpan = document.getElementById('metas-semana');
 const metasMesSpan = document.getElementById('metas-mes');
 
+
 function analisarEstatisticas() {
-    // Define os status que consideramos como "concluído"
     const TAREFA_STATUS_CONCLUIDA = 'executada';
     const META_STATUS_SUCESSO = 'Sucesso';
 
     // --- Lógica de Datas ---
     const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0); // Zera a hora para comparar apenas a data
+    hoje.setHours(0, 0, 0, 0);
 
-    // Calcula o início e o fim da semana atual (Domingo a Sábado)
     const inicioSemana = new Date(hoje);
-    inicioSemana.setDate(hoje.getDate() - hoje.getDay()); // Vai para o último domingo
+    inicioSemana.setDate(hoje.getDate() - hoje.getDay());
     
     const fimSemana = new Date(inicioSemana);
     fimSemana.setDate(inicioSemana.getDate() + 6);
-    fimSemana.setHours(23, 59, 59, 999); // Define o final do dia de sábado
+    fimSemana.setHours(23, 59, 59, 999);
 
-    // Calcula o início e o fim do mês atual
     const inicioMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
     const fimMes = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
-    fimMes.setHours(23, 59, 59, 999); // Define o final do último dia do mês
+    fimMes.setHours(23, 59, 59, 999);
 
     // --- Contagem de Tarefas ---
-    const tarefasConcluidas = tarefas.filter(t => t.status === TAREFA_STATUS_CONCLUIDA && t.dataConcluida);
-
-    const tarefasHoje = tarefasConcluidas.filter(t => {
+    // 1. CONCLUÍDAS
+    const tarefasConcluidasHoje = tarefas.filter(t => t.status === TAREFA_STATUS_CONCLUIDA && new Date(t.dataConcluida).toDateString() === hoje.toDateString()).length;
+    const tarefasConcluidasSemana = tarefas.filter(t => {
+        if (!t.dataConcluida) return false;
         const dataConcluida = new Date(t.dataConcluida);
-        return dataConcluida.toDateString() === hoje.toDateString();
+        return t.status === TAREFA_STATUS_CONCLUIDA && dataConcluida >= inicioSemana && dataConcluida <= fimSemana;
+    }).length;
+    const tarefasConcluidasMes = tarefas.filter(t => {
+        if (!t.dataConcluida) return false;
+        const dataConcluida = new Date(t.dataConcluida);
+        return t.status === TAREFA_STATUS_CONCLUIDA && dataConcluida >= inicioMes && dataConcluida <= fimMes;
     }).length;
 
-    const tarefasSemana = tarefasConcluidas.filter(t => {
-        const dataConcluida = new Date(t.dataConcluida);
-        return dataConcluida >= inicioSemana && dataConcluida <= fimSemana;
+    // 2. TOTAIS (baseado na data de entrega 'dataFinal')
+    const tarefasTotaisHoje = tarefas.filter(t => new Date(t.dataFinal).toDateString() === hoje.toDateString()).length;
+    const tarefasTotaisSemana = tarefas.filter(t => {
+        const dataFinal = new Date(t.dataFinal);
+        return dataFinal >= inicioSemana && dataFinal <= fimSemana;
+    }).length;
+    const tarefasTotaisMes = tarefas.filter(t => {
+        const dataFinal = new Date(t.dataFinal);
+        return dataFinal >= inicioMes && dataFinal <= fimMes;
     }).length;
 
-    const tarefasMes = tarefasConcluidas.filter(t => {
-        const dataConcluida = new Date(t.dataConcluida);
-        return dataConcluida >= inicioMes && dataConcluida <= fimMes;
-    }).length;
+    // 3. CÁLCULO DA PORCENTAGEM (evita divisão por zero)
+    const percHoje = tarefasTotaisHoje > 0 ? (tarefasConcluidasHoje / tarefasTotaisHoje) * 100 : 0;
+    const percSemana = tarefasTotaisSemana > 0 ? (tarefasConcluidasSemana / tarefasTotaisSemana) * 100 : 0;
+    const percMes = tarefasTotaisMes > 0 ? (tarefasConcluidasMes / tarefasTotaisMes) * 100 : 0;
 
-    // --- Contagem de Metas ---
+    // 4. ATUALIZAÇÃO DO HTML
+    tarefasHojeRatioSpan.textContent = `${tarefasConcluidasHoje}/${tarefasTotaisHoje}`;
+    tarefasHojeProgress.style.width = `${percHoje}%`;
+
+    tarefasSemanaRatioSpan.textContent = `${tarefasConcluidasSemana}/${tarefasTotaisSemana}`;
+    tarefasSemanaProgress.style.width = `${percSemana}%`;
+
+    tarefasMesRatioSpan.textContent = `${tarefasConcluidasMes}/${tarefasTotaisMes}`;
+    tarefasMesProgress.style.width = `${percMes}%`;
+
+
+    // --- Contagem de Metas (sem alterações) ---
     const metasSucesso = metas.filter(m => m.status === META_STATUS_SUCESSO && m.dataConcluida);
-
     const metasSemana = metasSucesso.filter(m => {
         const dataConcluida = new Date(m.dataConcluida);
         return dataConcluida >= inicioSemana && dataConcluida <= fimSemana;
     }).length;
-
     const metasMes = metasSucesso.filter(m => {
         const dataConcluida = new Date(m.dataConcluida);
         return dataConcluida >= inicioMes && dataConcluida <= fimMes;
     }).length;
-
-    // --- Atualiza o HTML com os valores ---
-    tarefasHojeSpan.textContent = tarefasHoje;
-    tarefasSemanaSpan.textContent = tarefasSemana;
-    tarefasMesSpan.textContent = tarefasMes;
+    
     metasSemanaSpan.textContent = metasSemana;
     metasMesSpan.textContent = metasMes;
-
-    
 }
 
 // ===================================================================
