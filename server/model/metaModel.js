@@ -18,7 +18,7 @@ categoria: {
     allowNull: false
 },
 status:{
-    type: DataTypes.ENUM('pendente', 'sucesso', 'parcial', 'falha'),
+    type: DataTypes.ENUM('Pendente', 'Sucesso', 'Parcial', 'Falha'),
     allowNull: false
 },
 dataCriacao:{
