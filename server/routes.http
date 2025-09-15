@@ -73,3 +73,20 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3333/meta/delete/1
+
+###
+
+POST http://localhost:3333/lembrete/create
+Content-Type: application/json
+
+{
+  "descricao": "Estudar para a prova de PLP"
+}
+
+###
+
+get http://localhost:3333/lembrete/getAll
+
+###
+
+delete http://localhost:3333/lembrete/delete/1

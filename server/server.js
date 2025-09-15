@@ -7,6 +7,7 @@ import sequelize from './database/sequelize.js';
 // Importe seus modelos para registrá-los
 import './model/tarefaModel.js';
 import './model/metaModel.js';
+import './model/lembreteModel.js';
 
 const server = fastify({ logger: true });
 
