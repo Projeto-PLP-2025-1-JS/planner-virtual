@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planner com Calendário</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <div class="calendar-container">
+            <div class="calendar">
+                <div class="month">
+                    <i class="fas fa-angle-left prev"></i>
+                    <div class="date"></div>
+                    <i class="fas fa-angle-right next"></i>
+                </div>
+                <div class="weekdays">
+                    <div>Dom</div>
+                    <div>Seg</div>
+                    <div>Ter</div>
+                    <div>Qua</div>
+                    <div>Qui</div>
+                    <div>Sex</div>
+                    <div>Sáb</div>
+                </div>
+                <div class="days"></div>
+            </div>
+        </div>
+
+        <div class="planner-container">
+            <h1>Planner Virtual</h1>
+            <h2 id="planner-title">Tarefas para Hoje</h2>
+
+            <section class="planner-section">
+                <h3>Adicionar Tarefa para a Data Selecionada</h3>
+                <form id="form-tarefa">
+                    <input type="text" id="descricao-tarefa" placeholder="Descrição da tarefa" required>
+                    <select id="categoria-tarefa">
+                        <option value="trabalho">Trabalho</option>
+                        <option value="pessoal">Pessoal</option>
+                        <option value="saude">Saúde</option>
+                        <option value="estudos">Estudos</option>
+                    </select>
+                    <input type="time" id="hora-final-tarefa" required>
+                    <button type="submit">Adicionar Tarefa</button>
+                </form>
+
+                <div class="filtros">
+                    <label for="filtro-categoria-tarefa">Filtrar Categoria:</label>
+                    <select id="filtro-categoria-tarefa">
+                        <option value="todas">Todas</option>
+                        <option value="trabalho">Trabalho</option>
+                        <option value="pessoal">Pessoal</option>
+                        <option value="saude">Saúde</option>
+                        <option value="estudos">Estudos</option>
+                    </select>
+                </div>
+
+                <h3>Lista de Tarefas</h3>
+                <div id="lista-tarefas"></div>
+            </section>
+            
+             <section class="planner-section">
+                <h2>Metas de Longo Prazo</h2>
+                <form id="form-meta">
+                     <input type="text" id="descricao" placeholder="Descrição da meta" required>
+                     <select id="categoria">
+                         <option value="financeiro">Financeiro</option>
+                         <option value="manutencao">Manutenção</option>
+                         <option value="saude">Saúde</option>
+                         <option value="estudos">Estudos</option>
+                     </select>
+                     <select id="periodo">
+                         <option value="semana">Semana</option>
+                         <option value="mes">Mês</option>
+                         <option value="ano">Ano</option>
+                     </select>
+                     <button type="submit">Adicionar Meta</button>
+                </form>
+
+                <div class="filtros">
+                     <label for="filtro-periodo">Período:</label>
+                     <select id="filtro-periodo">
+                        <option value="semana">Semana</option>
+                        <option value="mes" selected>Mês</option> 
+                        <option value="ano">Ano</option>
+                    </select>
+                     <label for="filtro-categoria">Categoria:</label>
+                     <select id="filtro-categoria">
+                         <option value="todas">Todas</option>
+                         <option value="financeiro">Financeiro</option>
+                         <option value="manutencao">Manutenção</option>
+                         <option value="saude">Saúde</option>
+                         <option value="estudos">Estudos</option>
+                     </select>
+                </div>
+                <h3>Lista de Metas</h3>
+                <div id="lista-metas"></div>
+            </section>
+        </div>
+    </div>
+
+    <div class="estatisticas">
+    <h2>Estatísticas de Conclusão</h2>
+    <div id="stats-content">
+        <p><strong>Tarefas Concluídas:</strong></p>
+        <ul>
+            <li>
+                <div class="stats-item-info">
+                    Hoje:
+                    <span class="stats-ratio" id="tarefas-hoje-ratio">0/0</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="tarefas-hoje-progress"></div>
+                </div>
+            </li>
+            <li>
+                <div class="stats-item-info">
+                    Nesta Semana:
+                    <span class="stats-ratio" id="tarefas-semana-ratio">0/0</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="tarefas-semana-progress"></div>
+                </div>
+            </li>
+            <li>
+                <div class="stats-item-info">
+                    Neste Mês:
+                    <span class="stats-ratio" id="tarefas-mes-ratio">0/0</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="tarefas-mes-progress"></div>
+                </div>
+            </li>
+        </ul>
+
+        <p><strong>Metas Atingidas (Sucesso):</strong></p>
+        <ul>
+            <li>Nesta Semana: <span id="metas-semana">0</span></li>
+            <li>Neste Mês: <span id="metas-mes">0</span></li>
+        </ul>
+    </div>
+</div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
