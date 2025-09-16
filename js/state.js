@@ -1,10 +1,4 @@
-// js/state.js
 
-/**
- * Estado global da aplicação.
- * Usamos 'let' para as variáveis que podem ser alteradas e exportamos
- * funções 'get' e 'set' para controlar o acesso e a modificação.
- */
 let state = {
     today: new Date(),
     selectedDate: new Date(),
@@ -16,10 +10,8 @@ let state = {
 
 export const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-// Funções para obter o estado (Getters)
 export const getState = () => state;
 
-// Funções para modificar o estado (Setters)
 export const setDate = (newMonth, newYear) => {
     state.month = newMonth;
     state.year = newYear;

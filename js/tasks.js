@@ -1,4 +1,3 @@
-// js/tasks.js
 
 import * as API from './api.js';
 import { getState, setTarefas } from './state.js';
@@ -38,9 +37,9 @@ export async function handleCriarTarefa(descricao, categoria, horaFinalStr) {
 
     try {
         await API.createTarefa(payload);
-        await carregarTarefas(); // Recarrega todas as tarefas para ter o estado mais recente
+        await carregarTarefas(); 
         renderTarefas();
-        initCalendar(); // Atualiza o calendário para mostrar o marcador de nova tarefa
+        initCalendar();
     } catch (error) {
         console.error(error);
         alert('Falha ao criar a tarefa.');
@@ -94,7 +93,7 @@ export function renderTarefas() {
     listaFiltrada.forEach(tarefa => {
         const div = document.createElement('div');
         div.className = `tarefa ${tarefa.status}`;
-        div.dataset.id = tarefa.id; // Adiciona o ID ao elemento
+        div.dataset.id = tarefa.id; 
         div.innerHTML = `
             <strong>${tarefa.descricao}</strong> (${tarefa.categoria})<br>
             Status: ${tarefa.status} | Horário: ${tarefa.horaFinal}<br>
@@ -106,7 +105,6 @@ export function renderTarefas() {
     });
 }
 
-// Event Delegation para os botões de ação das tarefas
 DOM.listaTarefasDiv.addEventListener('click', (e) => {
     const button = e.target.closest('button');
     if (!button) return;

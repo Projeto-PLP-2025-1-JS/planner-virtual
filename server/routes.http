@@ -33,7 +33,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3333/tarefa/6
+DELETE http://localhost:3333/tarefa/9
 
 
 
@@ -60,7 +60,7 @@ GET  http://localhost:3333/meta/getAll
 
 ###
 
-GET  http://localhost:3333/meta/get/4
+GET  http://localhost:3333/meta/get/5
 
 ###
 
@@ -72,7 +72,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3333/meta/delete/1
+DELETE http://localhost:3333/meta/delete/5
 
 ###
 

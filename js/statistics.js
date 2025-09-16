@@ -1,4 +1,3 @@
-// js/statistics.js
 
 import { getState } from './state.js';
 import * as DOM from './dom.js';
@@ -8,7 +7,6 @@ export function analisarEstatisticas() {
     const TAREFA_STATUS_CONCLUIDA = 'executada';
     const META_STATUS_SUCESSO = 'Sucesso';
 
-    // --- Lógica de Datas ---
     const hoje = new Date();
     hoje.setHours(0, 0, 0, 0);
 
@@ -23,7 +21,6 @@ export function analisarEstatisticas() {
     const fimMes = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
     fimMes.setHours(23, 59, 59, 999);
 
-    // --- Contagem de Tarefas ---
     const tarefasConcluidasHoje = tarefas.filter(t => t.status === TAREFA_STATUS_CONCLUIDA && new Date(t.dataConcluida).toDateString() === hoje.toDateString()).length;
     const tarefasConcluidasSemana = tarefas.filter(t => t.dataConcluida && t.status === TAREFA_STATUS_CONCLUIDA && new Date(t.dataConcluida) >= inicioSemana && new Date(t.dataConcluida) <= fimSemana).length;
     const tarefasConcluidasMes = tarefas.filter(t => t.dataConcluida && t.status === TAREFA_STATUS_CONCLUIDA && new Date(t.dataConcluida) >= inicioMes && new Date(t.dataConcluida) <= fimMes).length;
@@ -43,7 +40,6 @@ export function analisarEstatisticas() {
     DOM.tarefasMesRatioSpan.textContent = `${tarefasConcluidasMes}/${tarefasTotaisMes}`;
     DOM.tarefasMesProgress.style.width = `${percMes}%`;
 
-    // --- Contagem de Metas ---
     const metasSucesso = metas.filter(m => m.status === META_STATUS_SUCESSO && m.dataConcluida);
     const metasSemana = metasSucesso.filter(m => new Date(m.dataConcluida) >= inicioSemana && new Date(m.dataConcluida) <= fimSemana).length;
     const metasMes = metasSucesso.filter(m => new Date(m.dataConcluida) >= inicioMes && new Date(m.dataConcluida) <= fimMes).length;

@@ -1,4 +1,3 @@
-// js/utils.js
 
 import { getState } from './state.js';
 import * as API from './api.js';
@@ -18,7 +17,7 @@ function encontrarItensExpirados() {
         .filter(meta => {
             if (meta.status !== 'Pendente') return false;
             const dataFinal = new Date(meta.dataFinal);
-            dataFinal.setHours(23, 59, 59, 999); // Ajusta para o fim do dia
+            dataFinal.setHours(23, 59, 59, 999); 
             return dataFinal < agora;
         })
         .map(meta => meta.id);
@@ -35,7 +34,6 @@ async function atualizarStatusExpirados() {
         return;
     }
 
-    // Cria um array de promessas para todas as atualizações
     const updatePromises = [
         ...tarefasExpiradas.map(id => API.updateTarefa(id, { status: 'atrasada' })),
         ...metasExpiradas.map(id => API.updateMeta(id, { status: 'falhou' }))
@@ -45,7 +43,6 @@ async function atualizarStatusExpirados() {
         await Promise.all(updatePromises);
         console.log("Itens expirados atualizados com sucesso. Recarregando dados...");
         
-        // Recarrega e re-renderiza tudo para refletir as mudanças
         await carregarTarefas();
         await carregarMetas();
         renderTarefas();
@@ -58,6 +55,6 @@ async function atualizarStatusExpirados() {
 }
 
 export function iniciarVerificacaoDePrazos() {
-    atualizarStatusExpirados(); // Verificação inicial imediata
-    setInterval(atualizarStatusExpirados, 60 * 1000); // Verifica a cada 1 minuto
+    atualizarStatusExpirados(); 
+    setInterval(atualizarStatusExpirados, 60 * 1000);
 }
