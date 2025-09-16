@@ -2,8 +2,6 @@
 
 import { API_BASE_URL } from './dom.js';
 
-// --- Funções da API de Tarefas ---
-
 export async function fetchTarefas() {
     const response = await fetch(`${API_BASE_URL}/tarefas`);
     if (!response.ok) throw new Error('Erro ao buscar tarefas.');
@@ -34,9 +32,6 @@ export async function updateTarefa(id, payload) {
     if (!response.ok) throw new Error('Erro ao atualizar tarefa.');
     return response.json();
 }
-
-
-// --- Funções da API de Metas ---
 
 export async function fetchMetas() {
     const response = await fetch(`${API_BASE_URL}/meta/getAll`);

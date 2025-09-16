@@ -1,4 +1,4 @@
-// js/goals.js
+
 
 import * as API from './api.js';
 import { getState, setMetas } from './state.js';
@@ -98,7 +98,7 @@ export function renderMetas() {
     });
 }
 
-// Event Delegation para os botões de ação das metas
+
 DOM.listaMetasDiv.addEventListener('click', (e) => {
     const button = e.target.closest('button');
     if (!button) return;

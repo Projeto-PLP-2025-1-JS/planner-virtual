@@ -1,4 +1,5 @@
-import { Transaction } from 'sequelize'
+//import do service
+
 import metaService from '../service/metaService.js'
 
 export class metaController {
@@ -7,6 +8,8 @@ export class metaController {
         try {   
             const meta = request.body
             const result = await metaService.createMeta(meta)
+             //chama o service que la vai chamar o repositorio
+            // e delá vai criar a tupla no bd, se tudo ocorrer certoo
             reply.status(201).send(result)
         }
         catch (e){
@@ -16,10 +19,12 @@ export class metaController {
 
     async getMetas(request,reply){
         try {   
+            //vai pegar todas as tuplas de meta
             const metas = await metaService.getAllMetas()
             reply.status(200).send(metas)
         }
         catch (e){
+            //caso algum erro aconteca
             reply.status(400).send({error: 'Erro ao conseguir as meta: ' + e.message})
         }
     }

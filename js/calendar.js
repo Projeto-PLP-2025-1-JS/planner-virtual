@@ -1,8 +1,8 @@
-// js/calendar.js
+
 
 import { getState, setDate, setSelectedDate, months } from './state.js';
 import * as DOM from './dom.js';
-import { renderTarefas } from './tasks.js'; // Importa para atualizar a lista ao clicar
+import { renderTarefas } from './tasks.js';
 
 function addDayClickListeners() {
     DOM.daysContainer.querySelectorAll(".day").forEach(day => {
@@ -21,7 +21,7 @@ function addDayClickListeners() {
             const { year, month } = getState();
             setSelectedDate(new Date(year, month, dayNumber));
             initCalendar();
-            renderTarefas(); // Atualiza a lista de tarefas para o dia selecionado
+            renderTarefas();
         });
     });
 }
